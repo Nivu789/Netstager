@@ -7,7 +7,7 @@ const teamRouter = require('./routes/teamRoute')
 const errorHandler = require('./middlewares/errorHandler')
 const app = express()
 
-mongoose.connect('mongodb+srv://nivuyt789:SBfnaofXAw2PyUAD@cluster0.gfgqd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.DB_URI)
 .then(()=>console.log("database connected"))
 .catch(()=>console.log("failed in connecting database"))
 
