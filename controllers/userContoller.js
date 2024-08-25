@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const  sendVerificationEmail = require('../helpers/sendVerificationEmail')
 const USER = require('../models/userModel')
 
-const registerUser = async(req,res) =>{
+const registerUser = async(req,res,next) =>{
     try {
         const {email,password} = req.body
 
@@ -31,11 +31,12 @@ const registerUser = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
 
-const verifyEmail = async(req,res) =>{
+const verifyEmail = async(req,res,next) =>{
     try {
 
         const {token} = req.query
@@ -63,11 +64,12 @@ const verifyEmail = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
 
-const loginUser = async(req,res) =>{
+const loginUser = async(req,res,next) =>{
     try {
         const {email,password} = req.body
         if(!email || !password){
@@ -105,10 +107,11 @@ const loginUser = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
-const refreshToken = async(req,res) =>{
+const refreshToken = async(req,res,next) =>{
     try {
        const refreshToken = req.cookies.refreshTokenCookie
        
@@ -134,6 +137,7 @@ const refreshToken = async(req,res) =>{
        })
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 

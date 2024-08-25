@@ -18,11 +18,16 @@ const userAuth = async(req,res,next) =>{
                 if(!userData){
                     return res.status(400).json({message:"Something went wrong"})
                 }
+
+                if(!userData.isVerified){
+                    return res.status(400).json({message:"Account not verified yet"})
+                }
     
                 next()
            })
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 

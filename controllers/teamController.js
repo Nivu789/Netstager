@@ -1,7 +1,7 @@
 const TEAM = require("../models/teamModel")
 const USER = require('../models/userModel')
 
-const createTeam = async(req,res) =>{
+const createTeam = async(req,res,next) =>{
     try {
        const {teamname,userIds} = req.body
        
@@ -35,20 +35,22 @@ const createTeam = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
-const getTeams = async(req,res) =>{
+const getTeams = async(req,res,next) =>{
     try {
         const teams = await TEAM.find({})
         return res.status(200).json({teams})
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
 
-const assignTask = async(req,res) =>{
+const assignTask = async(req,res,next) =>{
     try {
        const teamId = req.params.teamId
         const {taskname,description} = req.body
@@ -71,7 +73,7 @@ const assignTask = async(req,res) =>{
         description:description,
        }
 
-       teamExist.tasks.push(newTask)
+       await teamExist.tasks.push(newTask)
 
        await teamExist.save()
 
@@ -79,11 +81,12 @@ const assignTask = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
 
-const getTasks = async(req,res) =>{
+const getTasks = async(req,res,next) =>{
     try {
         const teamId = req.params.teamId
 
@@ -100,11 +103,12 @@ const getTasks = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
 
-const updateTaskStatus = async(req,res) =>{
+const updateTaskStatus = async(req,res,next) =>{
     try {
         const {teamId} = req.params
         const {status,taskId} = req.body
@@ -143,6 +147,7 @@ const updateTaskStatus = async(req,res) =>{
 
     } catch (error) {
         console.log(error)
+        next(error)
     }
 }
 
